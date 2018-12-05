@@ -1,33 +1,24 @@
-import datetime
-import peewee as pw
+from app import db, login
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from flask_bcrypt import generate_password_hash, check_password_hash
 
-database = pw.SqliteDatabase('test.db')
 
-class BaseModel(pw.Model):
-    class Meta:
-        database = database
+class User(UserMixin,db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=True, unique=True)
+    email = db.Column(db.String(120), index=True, unique=True)
+    password_hash = db.Column(db.String(128))
 
-class User(UserMixin,BaseModel):
-    username = pw.CharField(unique=True)
-    email = pw.CharField(unique=True)
-    password = pw.CharField(max_length=100)
-    joined_at = pw.DateTimeField(default=datetime.datetime.now)
-    is_admin = pw.BooleanField(default=False)
+    def __repr__(self):
+        return '<User {}>'.format(self.username)
+    
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
 
-    class Meta:
-        order_by = ('-joined_at',)
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
-    @classmethod
-    def create_user(cls, username, email, password, admin=False):
-        try:
-            cls.create(
-                username=username,
-                email=email,
-                password=generate_password_hash(password),
-                is_admin=admin
-            )
-        except pw.IntegrityError:
-            raise ValueError("User already exists")
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 

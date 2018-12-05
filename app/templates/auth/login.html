@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1>{{title}}</h1>
+      </div>
+      <div class="panel-body">
+        <form action="" method="post">
+            {{ form.csrf_token }}
+            <p>
+                {{ form.username.label }}<br>
+                {{ form.username(required=False,size=32,class_="form-control") }}<br>
+                {% for error in form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(required=False,size=32,class_="form-control") }}<br>
+                {% for error in form.password.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+            <p>{{ form.submit(class_="btn btn-primary") }}</p>
+        </form>
+      </div>
+    </div>
+{% endblock %}

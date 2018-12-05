@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ini Index</title>
-</head>
-<body>
-    <h1>Index </h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1><h1>Hi, {{ current_user.username }}! ini adalah halaman index</h1></h1>
+      </div>
+      <div class="panel-body">
+        <h2>isi</h2>
+      </div>
+    </div>
+{% endblock %}
