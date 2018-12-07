@@ -1,2 +1,7 @@
 env/
 env/*
+
+app.db
+
+migrations/
+migrations/*
