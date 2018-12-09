@@ -20,19 +20,19 @@ Inisialisasi migrasi database untuk memudahkan pengembangan, penambahan tabel at
 inisialisasi
 
 ```bash
-falsk db init
+flask db init
 ```
 
 Generate file migrasi
 
 ```bash
-falsk db migrate
+flask db migrate
 ```
 
 upgrade migrasi
 
 ```bash
-falsk db upgrade
+flask db upgrade
 ```
 
 
